@@ -8,6 +8,8 @@
 
 Note that this repository is using C# 7.3 and thus supports features that you might not be familiar with from, say, Unity development.
 
+Also make sure that you give the bot full administrator privileges on the server you want to use it on. This is no general requirement, but the currently implemented commands assume that they can freely delete the messages that triggered them.
+
 # Overview
 Before starting to look into this repository, you should make sure that you are familiar with `async/await` in C#. A good learning resource is [this](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/async/index) combined with [this](https://docs.microsoft.com/en-us/dotnet/standard/async-in-depth). If you are still unsure about it, consult your senior engineer ;)
 This project uses [Discord.Net](https://github.com/RogueException/Discord.Net).
