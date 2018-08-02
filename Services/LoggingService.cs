@@ -1,6 +1,7 @@
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
@@ -10,15 +11,20 @@ namespace DiscordTestBot
     {
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
+        private readonly IConfigurationRoot _config;
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _discordLogger;
         private readonly ILogger _commandsLogger;
         private readonly ILogger _debugLogger;
 
-        public LoggingService(DiscordSocketClient discord, CommandService commands, ILoggerFactory loggerFactory)
+        public LoggingService(DiscordSocketClient discord,
+                              CommandService commands,
+                              IConfigurationRoot config,
+                              ILoggerFactory loggerFactory)
         {
             _discord = discord;
             _commands = commands;
+            _config = config;
 
             _loggerFactory = ConfigureLogging(loggerFactory);
             _debugLogger = _loggerFactory.CreateLogger("debug");
@@ -31,7 +37,10 @@ namespace DiscordTestBot
 
         private ILoggerFactory ConfigureLogging(ILoggerFactory factory)
         {
-            factory.AddConsole();
+            if (!System.Enum.TryParse<LogLevel>(_config["loglevel"], true, out var logLevel)) {
+                logLevel = LogLevel.Debug;
+            }            
+            factory.AddConsole(logLevel);
             return factory;
         }
 
