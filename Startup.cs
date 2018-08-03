@@ -34,9 +34,11 @@ namespace DiscordTestBot
             // into existence
             provider.GetRequiredService<CommandHandlingService>();
             provider.GetRequiredService<LoggingService>();
+            provider.GetRequiredService<MongoDBService>().Start();
 
             // initialize the connection to Discord
             await provider.GetRequiredService<StartupService>().StartAsync();
+
 
             // wait indefinitely so your bot doesn't disconnect
             await Task.Delay(-1);
@@ -61,6 +63,8 @@ namespace DiscordTestBot
                 CaseSensitiveCommands = false
             }))
             .AddSingleton<CommandHandlingService>()
+            .AddSingleton<MongoDBService>()
+            .AddSingleton<UserScoreService>()
             .AddSingleton(Configuration)
             .BuildServiceProvider();
         }

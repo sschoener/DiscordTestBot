@@ -54,5 +54,10 @@ Discord.Net is written with dependency injection in mind. That is, when the prog
 ## Current capabilities
 The bot currently only supports asking for help using `!help` and echoing messages back to the user. The `help` functionality will surely be useful for your own bot, too. The set of features is very limited on purpose because it is more about the architecture of the bot than about its cool functions (I'm sure you have plenty ideas for that yourself!).
 
+## MongoDB
+Sooner or later, your bot will need to store persistent data (i.e., even more persistent than services, which just run for as long as the bot is running). Maybe you want to create a bot that allows you to set reminders in the future? They should be stored somewhere safely. We will be using a database for this; more specifically, we are using [MongoDB](https://www.mongodb.com/), a schemaless NoSql database with decent C# bindings that allow for fast iterations. Download it from [here](https://www.mongodb.com/download-center?jmp=nav#community) and follow the [installation instructions](https://docs.mongodb.com/manual/administration/install-community/).
+
+The `MongoDBService` connects to the database and the `UserScoreModule` shows how to store and retrieve data for a given key. The `MongoDBModule` has some debugging commands for MongoDB.
+
 # Credits
 Inspired by [this wonderful example](https://github.com/Aux/Discord.Net-Example).

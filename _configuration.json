@@ -3,5 +3,9 @@
 	"prefix": "!",
 	"tokens": {
 		"discord": null
+	},
+	"mongodb": {
+		"address": "mongodb://localhost:27017",
+		"database": "discordtestbot"
 	}
 }

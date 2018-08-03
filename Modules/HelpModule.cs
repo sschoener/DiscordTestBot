@@ -14,8 +14,6 @@ namespace DiscordTestBot {
         public LoggingService Logging { get; set; }
         public IConfigurationRoot Configuration { get; set; }
 
-        private static Color EmbedColor = new Color(114, 137, 218);
-
         [Command("help"), Summary("Displays a help message for commands.")]
         [UsageExample("help testmod echo", "Displays help for the command `echo` from the `testmod` module.")]
         public async Task Help([Remainder] string path = null) {
@@ -37,7 +35,7 @@ namespace DiscordTestBot {
                     if (module != null) {
                         await ShowModuleHelp(module);
                     } else {
-                        await Context.User.SendMessageAsync("Failed to find anything at path " + path + ".\nSend `" + Configuration["prefix"] + "help` to see instructions.");
+                        await Context.User.SendMessageAsync($"Failed to find anything at path {path}.\nSend `{Configuration["prefix"]}help` to see instructions.");
                     }
                 }
             }
@@ -47,11 +45,12 @@ namespace DiscordTestBot {
             var b = new EmbedBuilder();
 
             string prefix = Configuration["prefix"];
-            string usage = "Send commands to the bot by prefixing them with `" + prefix +
-                           "`. For example, `" + prefix + "help echo` will show help for the `echo` command. Use `" +
-                           prefix + "help help` for additional information about the `help` command.";
+            string usage = $"Send commands to the bot by prefixing them with `{prefix}`. "+
+                           $"For example, `{prefix} help echo` will show help for the `echo` command. " + 
+                           $"Use `{prefix}help help` for additional information about the `help` command. " +
+                           $"For commands that have multiple words in them like `foo bar`, you can also query for any prefix, e.g. `{prefix}help foo` will show help about the `foo` module.";
             b.WithTitle("Help")
-             .WithColor(EmbedColor)
+             .WithColor(Constants.DiscordBlue)
              .WithDescription(usage);
             var commands = await GetAvailableCommands();
             b.AddField("Available Commands", FormatCommandList(commands));
@@ -70,7 +69,7 @@ namespace DiscordTestBot {
         private async Task ShowModuleHelp(ModuleInfo info) {
             var b = new EmbedBuilder();
             b.WithTitle("Module " + info.Aliases[0])
-             .WithColor(EmbedColor);
+             .WithColor(Constants.DiscordBlue);
             if (!string.IsNullOrWhiteSpace(info.Summary))
                 b.WithDescription(info.Summary);
             if (!string.IsNullOrWhiteSpace(info.Remarks))
@@ -161,14 +160,14 @@ namespace DiscordTestBot {
         private Embed MakeCommandEmbed(CommandInfo cmd) {
             var b = new EmbedBuilder();
             b.WithTitle(cmd.Aliases[0])
-             .WithColor(EmbedColor);
+             .WithColor(Constants.DiscordBlue);
             if (!string.IsNullOrWhiteSpace(cmd.Summary))
                 b.WithDescription(cmd.Summary);
             if (!string.IsNullOrWhiteSpace(cmd.Remarks))
                 b.AddField("Remarks", cmd.Remarks);
             if (cmd.Aliases.Count > 1)
                 b.AddField("Aliases", string.Join(", ", cmd.Aliases));
-            b.AddField("Usage", "```" + cmd.Aliases[0] + " " + GetCommandParametersInline(cmd) + "```");
+            b.AddField("Usage", $"```{cmd.Aliases[0]} {GetCommandParametersInline(cmd)}```");
             var examples = GetExamples(cmd);
             if (examples.Count > 0)
                 b.AddField("Examples", GetExampleLines(examples));

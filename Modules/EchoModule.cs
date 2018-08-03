@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace DiscordTestBot {
     [Group("test")]
@@ -11,7 +13,6 @@ namespace DiscordTestBot {
         [UsageExample("test echo Hello World!", "Echoes back 'Hello World!'.")]
         public async Task Echo([Remainder, Summary("The text to echo.")] string msg)
         {
-            var client = Context.Client;
             // assume that we can delete message everywhere but in private DMs to our bot.
             if (!(Context.Channel is IDMChannel))
                 await Context.Message.DeleteAsync();
