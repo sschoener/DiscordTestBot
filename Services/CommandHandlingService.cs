@@ -38,11 +38,12 @@ namespace DiscordTestBot
             var context = new SocketCommandContext(_discord, msg);
 
             int argPos = 0;
+            string prefix = _config["prefix"];
             if (msg.HasStringPrefix(_config["prefix"], ref argPos) || msg.HasMentionPrefix(_discord.CurrentUser, ref argPos))
             {
                 var result = await _commands.ExecuteAsync(context, argPos, _provider);
                 if (!result.IsSuccess)
-                    await context.User.SendMessageAsync(result.ToString());
+                    await context.User.SendMessageAsync("Command failed! Use `{prefix}help` to get help. Error:\n{result}");
             }
         }
     }
