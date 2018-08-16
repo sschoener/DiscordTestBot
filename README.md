@@ -1,6 +1,6 @@
 # Installation
  1. Clone the repository.
- 2. Make sure that you have .NET core 2.1.201 installed. You can install it from [here](https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.1.201-sdk-download.md). Make sure to install the SDK version!
+ 2. Make sure that you have .NET Core 2.1.201 installed. You can install it from [here](https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.1.201-sdk-download.md). Make sure to install the SDK version!
  3. Within the repository, run `dotnet restore`. This will try to set up the environment.
  4. Execute `dotnet build` to ensure that the program builds as expected.
  5. Make sure to add your bot's discord token to the `configuration.json` file. **Do NOT publish it somewhere with your token in it. Do NOT commit to this repository with the token in it.**
@@ -58,6 +58,9 @@ The bot currently only supports asking for help using `!help` and echoing messag
 Sooner or later, your bot will need to store persistent data (i.e., even more persistent than services, which just run for as long as the bot is running). Maybe you want to create a bot that allows you to set reminders in the future? They should be stored somewhere safely. We will be using a database for this; more specifically, we are using [MongoDB](https://www.mongodb.com/), a schemaless NoSql database with decent C# bindings that allow for fast iterations. Download it from [here](https://www.mongodb.com/download-center?jmp=nav#community) and follow the [installation instructions](https://docs.mongodb.com/manual/administration/install-community/).
 
 The `MongoDBService` connects to the database and the `UserScoreModule` shows how to store and retrieve data for a given key. The `MongoDBModule` has some debugging commands for MongoDB.
+
+# Known Issues
+The `!help` command does not take Discord's message limits into account. this means that if you have a lot of commands or commands with a very long summary, you will run into exceptions sooner or later.
 
 # Credits
 Inspired by [this wonderful example](https://github.com/Aux/Discord.Net-Example).
