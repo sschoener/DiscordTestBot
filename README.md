@@ -59,8 +59,5 @@ Sooner or later, your bot will need to store persistent data (i.e., even more pe
 
 The `MongoDBService` connects to the database and the `UserScoreModule` shows how to store and retrieve data for a given key. The `MongoDBModule` has some debugging commands for MongoDB.
 
-# Known Issues
-The `!help` command does not take Discord's message limits into account. this means that if you have a lot of commands or commands with a very long summary, you will run into exceptions sooner or later.
-
 # Credits
 Inspired by [this wonderful example](https://github.com/Aux/Discord.Net-Example).
